@@ -133,14 +133,7 @@ cdef inline int get_data_from_buffer(object obj,
         return 1
     else:
         new_protocol[0] = 0
-        if PyObject_AsReadBuffer(obj, <const void**> buf, buffer_len) == -1:
-            raise BufferError("could not get memoryview")
-        PyErr_WarnEx(RuntimeWarning,
-                     "using old buffer interface to unpack %s; "
-                     "this leads to unpacking errors if slicing is used and "
-                     "will be removed in a future version" % type(obj),
-                     1)
-        return 1
+        raise BufferError("could not get memoryview")
 
 cdef Py_ssize_t MAX_LENGTH = 2**32 -1
 
